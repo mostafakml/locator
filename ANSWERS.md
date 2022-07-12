@@ -4,34 +4,40 @@ transparency?
 
 answer:
 
-this service run in http protocol so at the first level if drones and this service use same intranet internal ip should be accessable or at least service should be assigned 
-a dns and drone also assess to that dns 
+this service run in http protocol so at the first level 
+if drones and this service use same intranet network internal ip should be accessable 
+or at least service should be assigned 
+to dns domain like (data-bank.com) and drone also assess to that dns 
 the second level each port choose for app should be exposed for drone and 
-the case usind docker port should be mirror and the the port  that in actual machine should be exposed
+the case using docker port should be mirror and  the that port   in actual machine should be exposed
 
 
 - Why throttling is useful (if it is)? How would you implement it here?
 
 answer:
- generally throttling is usefull for prevent over-load but for this specepic problem its seem the cost of throttling as 
- bigger than response and also the definition of problem not provide any information about 
- how mutch any drone need this service also becuase we dont implement auth
+ generally throttling is useful for prevent over-load but for this 
+ specific problem its seem the cost of throttling is 
+ bigger than response  also the definition of problem not provide any information about 
+ how much any drone need this service also because we dont implement auth
  we cant authenticate who use this service.
- so if we have those information we can add a middleware layer to implement throttling 
+ so if we have this information we can add a middleware layer to implement throttling 
+ other option is implement throttling base on ip how many a ip can use our service  this case is also 
+ doable by adding a custom middleware
   
 - What we have to change to make DNS be able to service several sectors at the same
 time?
 
-anwer:
-at the current senario we have sector id at the config file 
-if drone can have give us sectorid at the request body we can provide location for any drone in any sector
+answer:
+at the current scenario we have sector id at the config file 
+if drone can have given us sectorid at the request body we can provide location for any drone in any sector
 
 but if drone cant send us any information about sector we cant service
-in other senario for example other service map for our service drone and sector id we can add other service for register
-sector and drone and give access to drone the if drone is authenticated we can provide location for multiple sector
+in other scenario for example third service map for our service drone and sectors
+ we can add other api service for register
+sector and drone and give access to drone the if authenticated drone we can provide location for multiple sector
 i that case we need at least 3 api service /sector  /drone  /drone-sector
 
-we need to sore those data in a rdbms like postres and we have thre table sectors,drones
+we need to sore those data in a rdbms like postreSQL and we have two table sectors,drones
 and the relation between drones and sector is one to many 
 also we need jwt service to authenticate our drones
 
@@ -48,8 +54,9 @@ even better and more accurate, so we started producing a new drone model, based 
 new math. How would you enable scenario where DNS can serve both types of clients?
 
 answer: 
-the strategy pattern seems a qood choice here . we can seperate those two method in our business layer then receive the method in request 
-body the base run our method base on which method choose
+the strategy pattern seems a qood choice here . we can seperate those two method in our business layer
+ then receive the method in request body as property
+  base on property our service decide use which method
 
 - In general, how would you separate technical decision to deploy something from
 business decision to release something?
@@ -57,5 +64,5 @@ business decision to release something?
 
 the role of business team is what and why and the role of tech team is how
 when a business decision come in tech side tech team should turn a epic to the multiple story and breaked i doable task 
-priority and limitaion is also a group decision between techteam and other team that cto should 
+priority and limitation is also a group decision between tech team and other team that cto should 
 handle them
